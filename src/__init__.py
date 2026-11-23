@@ -1,5 +1,3 @@
-"""Mecanismo de busca PLN sobre o dataset Netflix Shows (Ingênua, BM25 e WAND)."""
-
 from .bm25 import BM25Index, BM25SearchEngine
 from .models import SearchResponse, SearchResult
 from .naive_search import NaiveSearchEngine

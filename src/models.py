@@ -1,5 +1,3 @@
-"""Estruturas de dados compartilhadas pelos mecanismos de busca."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -11,8 +9,6 @@ if TYPE_CHECKING:
 
 @dataclass(slots=True)
 class SearchResult:
-    """Um item retornado no ranking Top-K."""
-
     doc_id: int
     score: float
     show_id: str
@@ -25,8 +21,6 @@ class SearchResult:
 
 @dataclass(slots=True)
 class SearchResponse:
-    """Resultado de uma consulta com métricas de execução instrumentadas."""
-
     query: str
     algorithm: str
     top_k: int
@@ -38,7 +32,6 @@ class SearchResponse:
 
 
 def build_search_result(doc: NetflixDocument, score: float) -> SearchResult:
-    """Constrói um SearchResult a partir de um NetflixDocument e seu score."""
     return SearchResult(
         doc_id=doc.doc_id,
         score=score,

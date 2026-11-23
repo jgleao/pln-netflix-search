@@ -1,5 +1,3 @@
-"""Testes unitários e de equivalência exata entre BM25 puro e WAND."""
-
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,3 @@
-"""Carregamento e pré-processamento textual do dataset Netflix Shows."""
-
 from __future__ import annotations
 
 import re
@@ -11,7 +9,6 @@ import pandas as pd
 
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 
-# Lista padrão de stopwords em inglês (evita dependência externa de downloads em tempo de execução).
 STOPWORDS: frozenset[str] = frozenset(
     {
         "a", "about", "above", "after", "again", "against", "all", "am", "an",
@@ -35,8 +32,6 @@ STOPWORDS: frozenset[str] = frozenset(
 
 @dataclass(slots=True)
 class NetflixDocument:
-    """Representa um título indexável do catálogo da Netflix."""
-
     doc_id: int
     show_id: str
     media_type: str
@@ -52,13 +47,11 @@ class NetflixDocument:
 
 
 def normalize_text(text: str) -> str:
-    """Converte para minúsculas e remove acentuação via decomposição NFKD."""
     decomposed = unicodedata.normalize("NFKD", text.lower())
     return "".join(ch for ch in decomposed if not unicodedata.combining(ch))
 
 
 def tokenize(text: str, remove_stopwords: bool = True) -> list[str]:
-    """Extrai tokens alfanuméricos normalizados e remove stopwords opcionalmente."""
     normalized = normalize_text(text)
     tokens = _TOKEN_RE.findall(normalized)
     if remove_stopwords:
@@ -77,13 +70,6 @@ def load_netflix_corpus(
     media_type: str | None = None,
     remove_stopwords: bool = True,
 ) -> list[NetflixDocument]:
-    """Carrega `netflix_titles.csv` e gera os documentos tokenizados.
-
-    Args:
-        csv_path: Caminho para o arquivo CSV.
-        media_type: Opcional, filtra por 'Movie' ou 'TV Show'.
-        remove_stopwords: Se True, remove stopwords em inglês na tokenização.
-    """
     df = pd.read_csv(csv_path)
     if media_type is not None:
         df = df[df["type"] == media_type].reset_index(drop=True)

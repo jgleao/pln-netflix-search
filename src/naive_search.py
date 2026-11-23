@@ -1,5 +1,3 @@
-"""Mecanismo de busca ingênua (varredura linear sem índice invertido)."""
-
 from __future__ import annotations
 
 import heapq
@@ -11,13 +9,6 @@ from .preprocessing import NetflixDocument, tokenize
 
 
 class NaiveSearchEngine:
-    """Busca linear força-bruta baseada em frequência simples de termos (TF bruto).
-
-    A cada consulta, percorre todos os documentos da coleção e conta quantas vezes
-    os termos da consulta aparecem no texto tokenizado, sem uso de índice invertido,
-    IDF ou normalização pelo comprimento do documento.
-    """
-
     def __init__(
         self,
         documents: list[NetflixDocument],
@@ -27,7 +18,6 @@ class NaiveSearchEngine:
         self.remove_stopwords = remove_stopwords
 
     def search(self, query: str, k: int = 10) -> SearchResponse:
-        """Executa busca linear sobre todos os documentos e retorna o Top-K."""
         start_ns = time.perf_counter_ns()
         query_tokens = tokenize(query, remove_stopwords=self.remove_stopwords)
 
@@ -56,7 +46,6 @@ class NaiveSearchEngine:
                 if tok in query_term_set:
                     score += query_counts[tok]
             if score > 0:
-                # Armazena -doc_id para desempate determinístico a favor do menor doc_id.
                 scored.append((float(score), -doc.doc_id))
 
         top_items = heapq.nlargest(k, scored)

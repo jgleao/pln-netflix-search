@@ -1,5 +1,3 @@
-"""Interface de linha de comando para consultar o mecanismo de busca Netflix."""
-
 from __future__ import annotations
 
 import argparse

@@ -1,5 +1,3 @@
-"""Implementação do algoritmo WAND (Weak AND) para poda dinâmica sobre BM25."""
-
 from __future__ import annotations
 
 import heapq
@@ -18,8 +16,6 @@ _FLOAT_EPS = 1e-12
 
 @dataclass(slots=True)
 class _PostingCursor:
-    """Cursor sobre a lista invertida ordenada de um termo da consulta."""
-
     term_order: int
     doc_ids: list[int]
     scores: list[float]
@@ -33,7 +29,6 @@ class _PostingCursor:
         self.doc_id = self.doc_ids[0]
 
     def advance(self) -> bool:
-        """Avança para o próximo posting; retorna False se a lista terminou."""
         self.pos += 1
         if self.pos >= self.length:
             return False
@@ -41,7 +36,6 @@ class _PostingCursor:
         return True
 
     def seek(self, target_doc_id: int) -> bool:
-        """Salta via busca binária para o primeiro doc_id >= target_doc_id."""
         new_pos = bisect_left(self.doc_ids, target_doc_id, self.pos)
         if new_pos >= self.length:
             self.pos = self.length
@@ -52,17 +46,10 @@ class _PostingCursor:
 
 
 class WANDSearchEngine:
-    """Busca BM25 exata acelerada pelo algoritmo WAND (Broder et al., 2003).
-
-    Garante o mesmo Top-K do BM25 puro exaustivo usando upper bounds por termo
-    para pular documentos que não podem ultrapassar o limiar atual do heap.
-    """
-
     def __init__(self, index: BM25Index) -> None:
         self.index = index
 
     def search(self, query: str, k: int = 10) -> SearchResponse:
-        """Executa busca Top-K usando poda dinâmica WAND."""
         start_ns = time.perf_counter_ns()
         query_tokens = tokenize(query, remove_stopwords=self.index.remove_stopwords)
 
@@ -135,7 +122,6 @@ class WANDSearchEngine:
             pivot_doc = cursors[pivot_idx].doc_id
 
             if cursors[0].doc_id == pivot_doc:
-                # Todos os cursores em pivot_doc estão contíguos no início da lista ordenada.
                 matched: list[tuple[int, float]] = []
                 next_cursors: list[_PostingCursor] = []
                 i = 0
@@ -153,7 +139,6 @@ class WANDSearchEngine:
                     next_cursors.extend(cursors[i:])
                 cursors = next_cursors
 
-                # Soma na ordem canônica dos termos para igualdade bit-a-bit com o BM25 puro.
                 if len(matched) > 2:
                     matched.sort(key=lambda item: item[0])
                 doc_score = 0.0
@@ -169,7 +154,6 @@ class WANDSearchEngine:
                 elif candidate > heap[0]:
                     heapq.heapreplace(heap, candidate)
             else:
-                # Escolhe um cursor estritamente antes de pivot_doc com maior upper bound.
                 pick_idx = 0
                 best_ub = cursors[0].ub
                 for idx in range(1, pivot_idx):

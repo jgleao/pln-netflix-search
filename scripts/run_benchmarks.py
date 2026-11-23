@@ -1,5 +1,3 @@
-"""Executa benchmarks comparativos (Ingênua vs BM25 e BM25 vs WAND) e gera gráficos."""
-
 from __future__ import annotations
 
 import json
@@ -19,46 +17,38 @@ if str(ROOT_DIR) not in sys.path:
 
 from src.bm25 import BM25Index, BM25SearchEngine
 from src.naive_search import NaiveSearchEngine
-from src.preprocessing import NetflixDocument, load_netflix_corpus, tokenize
+from src.preprocessing import NetflixDocument, load_netflix_corpus
 from src.wand import WANDSearchEngine
 
-# 30 consultas variadas (1 a 8 termos) cobrindo gêneros, temas, países, atores e títulos.
 BENCHMARK_QUERIES: list[tuple[int, str]] = [
-    # 1 termo
     (1, "alien"),
     (1, "love"),
     (1, "thriller"),
     (1, "documentary"),
     (1, "christmas"),
-    # 2 termos
     (2, "serial killer"),
     (2, "world war"),
     (2, "standup comedy"),
     (2, "time travel"),
     (2, "high school"),
-    # 3 termos
     (3, "space alien adventure"),
     (3, "true crime murder"),
     (3, "korean drama romance"),
     (3, "family christmas holiday"),
     (3, "action thriller crime"),
-    # 4 termos
     (4, "indian bollywood drama romance"),
     (4, "teenage high school comedy"),
     (4, "police detective murder investigation"),
     (4, "animated kids adventure magic"),
     (4, "united states documentary music"),
-    # 5 termos
     (5, "international drama family love story"),
     (5, "crime thriller mystery suspense dark"),
     (5, "comedy stand up live special"),
     (5, "war history documentary military battle"),
     (5, "sci fi space future alien"),
-    # 6 termos
     (6, "united states comedy drama romance family"),
     (6, "young woman life love family friends"),
     (6, "crime police detective investigation mystery thriller"),
-    # 8 termos (consultas longas / alta cardinalidade de postings)
     (8, "united states international drama comedy action crime thriller"),
     (8, "love life family friends young man woman story"),
 ]
@@ -80,7 +70,6 @@ def _measure_query(
     k: int,
     repeats: int,
 ) -> tuple[float, int, int, int, list[int]]:
-    # Warmup para estabilizar caches de Python.
     resp = engine.search(query, k=k)
     latencies = []
     for _ in range(repeats):
@@ -236,8 +225,8 @@ def plot_bm25_vs_wand_pruning(
 
     x = np.arange(len(grouped))
     w = 0.36
-    b1 = ax1.bar(x - w / 2, grouped["bm25_docs"], w, label="BM25 Puro (Exaustivo)", color="#221F1F")
-    b2 = ax1.bar(x + w / 2, grouped["wand_docs"], w, label="WAND (Poda Dinâmica)", color="#27AE60")
+    ax1.bar(x - w / 2, grouped["bm25_docs"], w, label="BM25 Puro (Exaustivo)", color="#221F1F")
+    ax1.bar(x + w / 2, grouped["wand_docs"], w, label="WAND (Poda Dinâmica)", color="#27AE60")
     ax1.set_xticks(x)
     ax1.set_xticklabels([f"{int(q)} termos" for q in grouped["q_len"]])
     ax1.set_ylabel("Documentos Avaliados (média)")
@@ -323,7 +312,6 @@ def plot_bm25_vs_wand_latency(
 def plot_overall_comparison(df_exp1: pd.DataFrame, out_dir: Path) -> None:
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 4.6), dpi=150)
 
-    # Usa consultas multi-termo (>=3 termos) para destacar o papel de cada arquitetura
     sub = df_exp1[df_exp1["q_len"] >= 3]
     names = ["Busca Ingênua\n(Linear)", "BM25 Puro\n(Índice Invertido)", "WAND\n(Poda Dinâmica)"]
     means_ms = [sub["naive_ms"].mean(), sub["bm25_ms"].mean(), sub["wand_ms"].mean()]
@@ -369,7 +357,6 @@ def run_all() -> None:
     bm25 = BM25SearchEngine(index)
     wand = WANDSearchEngine(index)
 
-    # Experimento 1 & 2 (K=10 sobre as 30 consultas)
     rows_exp1 = []
     naive_top_lengths: list[int] = []
     bm25_top_lengths: list[int] = []
@@ -412,7 +399,6 @@ def run_all() -> None:
     df_exp1 = pd.DataFrame(rows_exp1)
     df_exp1.to_csv(results_dir / "benchmark_queries_k10.csv", index=False)
 
-    # Sobreposição Ingênua vs BM25 para K=5, 10, 20
     overlaps_by_k: dict[int, float] = {}
     for k in (5, 10, 20):
         ov_scores = []
@@ -423,7 +409,6 @@ def run_all() -> None:
             ov_scores.append(len(n_set & b_set) / denom)
         overlaps_by_k[k] = float(np.mean(ov_scores))
 
-    # Experimento variando K para consultas >= 3 termos
     rows_k = []
     multi_queries = [(q_len, q) for q_len, q in BENCHMARK_QUERIES if q_len >= 3]
     for k in (5, 10, 20, 50, 100):
@@ -450,7 +435,6 @@ def run_all() -> None:
     df_k = pd.DataFrame(rows_k)
     df_k.to_csv(results_dir / "benchmark_varying_k.csv", index=False)
 
-    # Exemplos qualitativos para o relatório
     qualitative_queries = ["love story", "serial killer", "space alien adventure"]
     qualitative_examples = {}
     for q in qualitative_queries:
@@ -472,7 +456,6 @@ def run_all() -> None:
             ],
         }
 
-    # Geração dos gráficos
     plot_naive_vs_bm25_latency(df_exp1, figures_dir)
     plot_naive_vs_bm25_quality(
         corpus_stats["avg_tokens"],

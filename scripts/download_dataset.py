@@ -1,5 +1,3 @@
-"""Script para baixar e extrair o dataset Netflix Shows do Kaggle."""
-
 from __future__ import annotations
 
 import argparse
@@ -13,7 +11,6 @@ KAGGLE_DATASET_URL = (
 
 
 def download_netflix_dataset(output_dir: Path, force: bool = False) -> Path:
-    """Baixa o arquivo zip do Kaggle e extrai `netflix_titles.csv`."""
     output_dir.mkdir(parents=True, exist_ok=True)
     csv_path = output_dir / "netflix_titles.csv"
     zip_path = output_dir / "netflix-shows.zip"

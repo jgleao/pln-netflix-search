@@ -1,5 +1,3 @@
-"""Índice invertido e mecanismo de busca Okapi BM25 puro (avaliação exaustiva)."""
-
 from __future__ import annotations
 
 import heapq
@@ -14,8 +12,6 @@ from .preprocessing import NetflixDocument, tokenize
 
 @dataclass(slots=True)
 class PostingList:
-    """Lista invertida ordenada por doc_id com scores BM25 parciais pré-computados."""
-
     term: str
     doc_ids: list[int]
     scores: list[float]
@@ -25,8 +21,6 @@ class PostingList:
 
 
 class BM25Index:
-    """Índice invertido com estatísticas da coleção e upper bounds para BM25/WAND."""
-
     def __init__(
         self,
         documents: list[NetflixDocument],
@@ -69,7 +63,6 @@ class BM25Index:
 
         for term, entries in raw_postings.items():
             df = len(entries)
-            # IDF estilo Lucene: estritamente positivo para todo termo (requisito do WAND).
             idf = math.log(1.0 + (n_docs - df + 0.5) / (df + 0.5))
             doc_ids: list[int] = []
             scores: list[float] = []
@@ -97,13 +90,10 @@ class BM25Index:
 
 
 class BM25SearchEngine:
-    """Busca BM25 exaustiva sobre o índice invertido (sem poda dinâmica)."""
-
     def __init__(self, index: BM25Index) -> None:
         self.index = index
 
     def search(self, query: str, k: int = 10) -> SearchResponse:
-        """Avalia todos os documentos candidatos da consulta e retorna o Top-K."""
         start_ns = time.perf_counter_ns()
         query_tokens = tokenize(query, remove_stopwords=self.index.remove_stopwords)
 
