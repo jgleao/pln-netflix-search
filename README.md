@@ -8,7 +8,18 @@ Desenvolvi este repositório para o trabalho da disciplina de **Processamento de
 2. **BM25 Puro** — índice invertido com ranqueamento Okapi BM25 ($k_1 = 1{,}5$, $b = 0{,}75$) e avaliação exaustiva de todos os candidatos.
 3. **WAND (*Weak AND*)** — algoritmo de poda dinâmica segura (*safe dynamic pruning*) sobre o índice do BM25, garantindo exatamente o mesmo ranking Top-$K$ do BM25 puro enquanto pula documentos que não conseguem alcançar o limiar atual.
 
-Todo o relatório comparativo com tabelas e gráficos está disponível em **[RELATORIO.md](RELATORIO.md)**. Caso prefira executar diretamente no navegador sem configurar ambiente local, também deixei um notebook pronto em **[notebooks/pln_netflix_search.ipynb](notebooks/pln_netflix_search.ipynb)** para rodar no Google Colab.
+Todo o relatório comparativo com tabelas e gráficos está disponível em **[RELATORIO.md](RELATORIO.md)**.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jgleao/pln-netflix-search/blob/master/notebooks/pln_netflix_search.ipynb)
+
+---
+
+## Executando no Google Colab (Sem Instalação Local)
+
+Caso prefira testar tudo diretamente no navegador sem instalar nada na sua máquina:
+
+1. Clique no link direto: **[Abrir notebook no Google Colab](https://colab.research.google.com/github/jgleao/pln-netflix-search/blob/master/notebooks/pln_netflix_search.ipynb)** (ou use o arquivo [notebooks/pln_netflix_search.ipynb](notebooks/pln_netflix_search.ipynb)).
+2. Execute todas as células em ordem (`Runtime -> Run all` / `Ambiente de execução -> Executar tudo`). O notebook já baixa o dataset do Kaggle, constrói os índices, valida `BM25 == WAND` e gera os gráficos comparativos.
 
 ---
 
@@ -144,10 +155,3 @@ python scripts/run_benchmarks.py
 ```
 
 Ao terminar, os 6 gráficos PNG estarão atualizados em `results/figures/` e os resultados numéricos da sua máquina ficarão salvos em `results/summary.json`, `results/benchmark_queries_k10.csv` e `results/benchmark_varying_k.csv`.
-
----
-
-## Executando no Google Colab (Alternativa sem instalação local)
-
-1. Abra diretamente no Google Colab pelo link: [Abrir notebook no Colab](https://colab.research.google.com/github/jgleao/pln-netflix-search/blob/master/notebooks/pln_netflix_search.ipynb) (ou faça upload de [notebooks/pln_netflix_search.ipynb](notebooks/pln_netflix_search.ipynb)).
-2. Execute as células em ordem (`Runtime -> Run all`). O notebook já baixa o dataset do Kaggle, constrói os índices, valida `BM25 == WAND` e plota os gráficos comparativos.
