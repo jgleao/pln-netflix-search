@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Dataset raw zip
+data/*.zip
+
+# OS
+.DS_Store
+Thumbs.db

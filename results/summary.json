@@ -1,0 +1,442 @@
+{
+  "corpus": {
+    "total_docs": 8807,
+    "movies": 6131,
+    "tv_shows": 2676,
+    "avg_tokens": 40.479732031338706,
+    "median_tokens": 41.0,
+    "min_tokens": 15,
+    "max_tokens": 134,
+    "vocab_size": 52616,
+    "index_build_ms": 388.84
+  },
+  "exact_wand_matches": "30/30",
+  "exp1_all_30_queries_k10": {
+    "naive_mean_ms": 9.296,
+    "naive_median_ms": 9.08,
+    "naive_p95_ms": 11.956,
+    "bm25_mean_ms": 0.282,
+    "bm25_median_ms": 0.131,
+    "bm25_p95_ms": 0.975,
+    "speedup_naive_to_bm25_mean": 33.02,
+    "mean_top10_len_naive": 42.53,
+    "mean_top10_len_bm25": 35.16,
+    "jaccard_overlap_k": {
+      "5": 23.4,
+      "10": 27.9,
+      "20": 31.9
+    }
+  },
+  "exp2_multi_term_k10": {
+    "bm25_mean_ms": 0.392,
+    "wand_mean_ms": 1.273,
+    "speedup_bm25_to_wand": 0.31,
+    "bm25_mean_docs": 2173.6,
+    "wand_mean_docs": 286.3,
+    "mean_pruning_pct": 78.7,
+    "naive_mean_ms_multi": 9.995
+  },
+  "exp2_by_query_length": {
+    "1": {
+      "naive_ms": 7.427,
+      "bm25_ms": 0.048,
+      "wand_ms": 0.164,
+      "bm25_docs": 238.0,
+      "wand_docs": 238.0,
+      "pruning_pct": 0.0,
+      "wand_seeks": 0.0
+    },
+    "2": {
+      "naive_ms": 8.37,
+      "bm25_ms": 0.074,
+      "wand_ms": 0.273,
+      "bm25_docs": 445.8,
+      "wand_docs": 228.0,
+      "pruning_pct": 45.606,
+      "wand_seeks": 91.0
+    },
+    "3": {
+      "naive_ms": 10.278,
+      "bm25_ms": 0.167,
+      "wand_ms": 0.515,
+      "bm25_docs": 1094.0,
+      "wand_docs": 271.0,
+      "pruning_pct": 70.121,
+      "wand_seeks": 253.8
+    },
+    "4": {
+      "naive_ms": 10.904,
+      "bm25_ms": 0.268,
+      "wand_ms": 0.447,
+      "bm25_docs": 1631.6,
+      "wand_docs": 177.6,
+      "pruning_pct": 79.986,
+      "wand_seeks": 383.8
+    },
+    "5": {
+      "naive_ms": 9.576,
+      "bm25_ms": 0.371,
+      "wand_ms": 0.906,
+      "bm25_docs": 1643.8,
+      "wand_docs": 211.8,
+      "pruning_pct": 78.562,
+      "wand_seeks": 536.2
+    },
+    "6": {
+      "naive_ms": 8.716,
+      "bm25_ms": 0.507,
+      "wand_ms": 1.712,
+      "bm25_docs": 3181.667,
+      "wand_docs": 439.333,
+      "pruning_pct": 83.308,
+      "wand_seeks": 1474.0
+    },
+    "8": {
+      "naive_ms": 9.985,
+      "bm25_ms": 1.144,
+      "wand_ms": 5.497,
+      "bm25_docs": 6040.0,
+      "wand_docs": 553.0,
+      "pruning_pct": 89.87,
+      "wand_seeks": 3350.5
+    }
+  },
+  "exp2_varying_k": {
+    "5": {
+      "bm25_ms": 0.321,
+      "wand_ms": 0.897,
+      "bm25_docs": 2173.6,
+      "wand_docs": 195.8,
+      "pruning_pct": 85.752,
+      "speedup": 0.428
+    },
+    "10": {
+      "bm25_ms": 0.346,
+      "wand_ms": 1.072,
+      "bm25_docs": 2173.6,
+      "wand_docs": 286.3,
+      "pruning_pct": 78.651,
+      "speedup": 0.364
+    },
+    "20": {
+      "bm25_ms": 0.341,
+      "wand_ms": 1.15,
+      "bm25_docs": 2173.6,
+      "wand_docs": 423.1,
+      "pruning_pct": 69.007,
+      "speedup": 0.336
+    },
+    "50": {
+      "bm25_ms": 0.503,
+      "wand_ms": 1.845,
+      "bm25_docs": 2173.6,
+      "wand_docs": 682.0,
+      "pruning_pct": 49.185,
+      "speedup": 0.332
+    },
+    "100": {
+      "bm25_ms": 0.514,
+      "wand_ms": 1.943,
+      "bm25_docs": 2173.6,
+      "wand_docs": 925.4,
+      "pruning_pct": 33.175,
+      "speedup": 0.32
+    }
+  },
+  "qualitative_examples": {
+    "love story": {
+      "naive": [
+        {
+          "title": "Berlin, I Love You",
+          "type": "Movie",
+          "score": 4.0,
+          "tokens": 25
+        },
+        {
+          "title": "My Love: Six Stories of True Love",
+          "type": "TV Show",
+          "score": 3.0,
+          "tokens": 43
+        },
+        {
+          "title": "Story of Kale: When Someone's in Love",
+          "type": "Movie",
+          "score": 3.0,
+          "tokens": 42
+        },
+        {
+          "title": "Love Aaj Kal",
+          "type": "Movie",
+          "score": 3.0,
+          "tokens": 43
+        },
+        {
+          "title": "A Love Story",
+          "type": "Movie",
+          "score": 3.0,
+          "tokens": 51
+        }
+      ],
+      "bm25": [
+        {
+          "title": "Berlin, I Love You",
+          "type": "Movie",
+          "score": 9.1526,
+          "tokens": 25
+        },
+        {
+          "title": "Chaotic Love Poems",
+          "type": "Movie",
+          "score": 8.1318,
+          "tokens": 30
+        },
+        {
+          "title": "The Story of Us with Morgan Freeman",
+          "type": "TV Show",
+          "score": 7.6835,
+          "tokens": 23
+        },
+        {
+          "title": "The Long Goodbye: The Kara Tippetts Story",
+          "type": "Movie",
+          "score": 7.3781,
+          "tokens": 26
+        },
+        {
+          "title": "Story of Kale: When Someone's in Love",
+          "type": "Movie",
+          "score": 7.2173,
+          "tokens": 42
+        }
+      ],
+      "wand": [
+        {
+          "title": "Berlin, I Love You",
+          "type": "Movie",
+          "score": 9.1526,
+          "tokens": 25
+        },
+        {
+          "title": "Chaotic Love Poems",
+          "type": "Movie",
+          "score": 8.1318,
+          "tokens": 30
+        },
+        {
+          "title": "The Story of Us with Morgan Freeman",
+          "type": "TV Show",
+          "score": 7.6835,
+          "tokens": 23
+        },
+        {
+          "title": "The Long Goodbye: The Kara Tippetts Story",
+          "type": "Movie",
+          "score": 7.3781,
+          "tokens": 26
+        },
+        {
+          "title": "Story of Kale: When Someone's in Love",
+          "type": "Movie",
+          "score": 7.2173,
+          "tokens": 42
+        }
+      ]
+    },
+    "serial killer": {
+      "naive": [
+        {
+          "title": "Night Stalker: The Hunt for a Serial Killer",
+          "type": "TV Show",
+          "score": 4.0,
+          "tokens": 32
+        },
+        {
+          "title": "The Clovehitch Killer",
+          "type": "Movie",
+          "score": 3.0,
+          "tokens": 41
+        },
+        {
+          "title": "Serial Killer with Piers Morgan",
+          "type": "TV Show",
+          "score": 3.0,
+          "tokens": 28
+        },
+        {
+          "title": "Conversations with a Killer: The Ted Bundy Tapes",
+          "type": "TV Show",
+          "score": 3.0,
+          "tokens": 29
+        },
+        {
+          "title": "Trigger Warning with Killer Mike",
+          "type": "TV Show",
+          "score": 3.0,
+          "tokens": 25
+        }
+      ],
+      "bm25": [
+        {
+          "title": "Night Stalker: The Hunt for a Serial Killer",
+          "type": "TV Show",
+          "score": 14.5861,
+          "tokens": 32
+        },
+        {
+          "title": "Inside the Mind of a Serial Killer",
+          "type": "TV Show",
+          "score": 13.5553,
+          "tokens": 26
+        },
+        {
+          "title": "Interview with a Serial Killer",
+          "type": "Movie",
+          "score": 13.462,
+          "tokens": 24
+        },
+        {
+          "title": "Serial Killer with Piers Morgan",
+          "type": "TV Show",
+          "score": 13.2744,
+          "tokens": 28
+        },
+        {
+          "title": "Conversations with a Killer: The Ted Bundy Tapes",
+          "type": "TV Show",
+          "score": 12.7458,
+          "tokens": 29
+        }
+      ],
+      "wand": [
+        {
+          "title": "Night Stalker: The Hunt for a Serial Killer",
+          "type": "TV Show",
+          "score": 14.5861,
+          "tokens": 32
+        },
+        {
+          "title": "Inside the Mind of a Serial Killer",
+          "type": "TV Show",
+          "score": 13.5553,
+          "tokens": 26
+        },
+        {
+          "title": "Interview with a Serial Killer",
+          "type": "Movie",
+          "score": 13.462,
+          "tokens": 24
+        },
+        {
+          "title": "Serial Killer with Piers Morgan",
+          "type": "TV Show",
+          "score": 13.2744,
+          "tokens": 28
+        },
+        {
+          "title": "Conversations with a Killer: The Ted Bundy Tapes",
+          "type": "TV Show",
+          "score": 12.7458,
+          "tokens": 29
+        }
+      ]
+    },
+    "space alien adventure": {
+      "naive": [
+        {
+          "title": "A StoryBots Space Adventure",
+          "type": "Movie",
+          "score": 4.0,
+          "tokens": 39
+        },
+        {
+          "title": "Star Trek: Deep Space Nine",
+          "type": "TV Show",
+          "score": 4.0,
+          "tokens": 49
+        },
+        {
+          "title": "Mobile Suit Gundam III: Encounters in Space",
+          "type": "Movie",
+          "score": 3.0,
+          "tokens": 56
+        },
+        {
+          "title": "Skylines",
+          "type": "Movie",
+          "score": 3.0,
+          "tokens": 45
+        },
+        {
+          "title": "Space Sweepers",
+          "type": "Movie",
+          "score": 3.0,
+          "tokens": 46
+        }
+      ],
+      "bm25": [
+        {
+          "title": "Lost in Space",
+          "type": "TV Show",
+          "score": 11.9972,
+          "tokens": 41
+        },
+        {
+          "title": "Miniforce X",
+          "type": "TV Show",
+          "score": 11.94,
+          "tokens": 26
+        },
+        {
+          "title": "Alien Contact: Outer Space",
+          "type": "Movie",
+          "score": 11.6317,
+          "tokens": 28
+        },
+        {
+          "title": "Skylines",
+          "type": "Movie",
+          "score": 11.4893,
+          "tokens": 45
+        },
+        {
+          "title": "Star Trek: Enterprise",
+          "type": "TV Show",
+          "score": 11.3689,
+          "tokens": 46
+        }
+      ],
+      "wand": [
+        {
+          "title": "Lost in Space",
+          "type": "TV Show",
+          "score": 11.9972,
+          "tokens": 41
+        },
+        {
+          "title": "Miniforce X",
+          "type": "TV Show",
+          "score": 11.94,
+          "tokens": 26
+        },
+        {
+          "title": "Alien Contact: Outer Space",
+          "type": "Movie",
+          "score": 11.6317,
+          "tokens": 28
+        },
+        {
+          "title": "Skylines",
+          "type": "Movie",
+          "score": 11.4893,
+          "tokens": 45
+        },
+        {
+          "title": "Star Trek: Enterprise",
+          "type": "TV Show",
+          "score": 11.3689,
+          "tokens": 46
+        }
+      ]
+    }
+  }
+}
