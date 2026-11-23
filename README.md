@@ -54,7 +54,7 @@ pln-netflix-search/
 ### 1. Clonar (ou baixar) o repositório e entrar na pasta
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/jgleao/pln-netflix-search.git
 cd pln-netflix-search
 ```
 
@@ -149,5 +149,5 @@ Ao terminar, os 6 gráficos PNG estarão atualizados em `results/figures/` e os 
 
 ## Executando no Google Colab (Alternativa sem instalação local)
 
-1. Faça upload do arquivo [notebooks/pln_netflix_search.ipynb](notebooks/pln_netflix_search.ipynb) no [Google Colab](https://colab.research.google.com/) (ou abra direto pelo GitHub).
+1. Abra diretamente no Google Colab pelo link: [Abrir notebook no Colab](https://colab.research.google.com/github/jgleao/pln-netflix-search/blob/master/notebooks/pln_netflix_search.ipynb) (ou faça upload de [notebooks/pln_netflix_search.ipynb](notebooks/pln_netflix_search.ipynb)).
 2. Execute as células em ordem (`Runtime -> Run all`). O notebook já baixa o dataset do Kaggle, constrói os índices, valida `BM25 == WAND` e plota os gráficos comparativos.
